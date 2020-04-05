@@ -18,7 +18,7 @@ for line in data:
 xMax = maxCounts
 data.close()
 bins = {}
-for k,v in word_counts.iteritems():
+for k,v in word_counts.items():
     bins[v] = bins.get(v,0) + 1
 
 y = []

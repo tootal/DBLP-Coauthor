@@ -9,10 +9,10 @@ class mHandler(handler.ContentHandler):
         self.flag = 0
 
     def startDocument(self):
-        print 'Document Start'
+        print ('Document Start')
         
     def endDocument(self):
-        print 'Document End'
+        print ('Document End')
         
     def startElement(self, name, attrs):
         if name == 'author':

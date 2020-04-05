@@ -8,7 +8,7 @@ class treeNode:
     def inc(self, numOccur):
         self.count += numOccur
     def disp(self, ind=1):
-        print '  '*ind, self.name, ' ', self.count
+        print ('  '*ind, self.name, ' ', self.count)
         for child in self.children.values():
             child.disp(ind+1)
 
@@ -19,7 +19,7 @@ def createTree(dataSet, minSup=1): #create FP-tree from dataset but don't mine
         for item in trans:
             freqDic[item] = freqDic.get(item, 0) + dataSet[trans]
     
-    headerTable = {k:v for (k,v) in freqDic.iteritems() if v >= minSup}
+    headerTable = {k:v for (k,v) in freqDic.items() if v >= minSup}
 
 
     #print 'freqItemSet: ',freqItemSet
@@ -71,7 +71,7 @@ def findPrefixPath(basePat, treeNode): #treeNode comes from header table
     return condPats
 
 def mineTree(inTree, headerTable, minSup, preFix, freqItemList):
-    bigL = [v[0] for v in sorted(headerTable.items(), key=lambda p: p[1])]#(sort header table)
+    bigL = [v[0] for v in sorted(headerTable.items(), key=lambda p: p[1][0])]#(sort header table)
     for basePat in bigL:  #start from bottom of header table
         newFreqSet = preFix.copy()
         newFreqSet.add(basePat)
@@ -102,24 +102,24 @@ def loadSimpDat(inFile):
 
 if __name__ == "__main__":
     minSup = 100
-    print "Reading Source File ... Wait..."
+    print ("Reading Source File ... Wait...")
     with open('authors_encoded.txt','r') as f:
         dataSet = loadSimpDat(f)
 
-    print "Constructing FP-tree ... Wait..."
+    print ("Constructing FP-tree ... Wait...")
     myFPtree, myHeaderTab = createTree(dataSet, minSup)
     
-    print "Mining frequent items ... Wait..."
+    print ("Mining frequent items ... Wait...")
     myFreqList = {}
     mineTree(myFPtree, myHeaderTab, minSup, set([]), myFreqList)
-    print "Totally %d frequent itemsets found ! " %len(myFreqList)
-    print "Constructing authors_index... Wait..."
+    print ("Totally %d frequent itemsets found ! " %len(myFreqList))
+    print ("Constructing authors_index... Wait...")
 
     maxCoauthors = 0
     for freqAuthors in myFreqList.keys():
         if len(freqAuthors) > maxCoauthors:
             maxCoauthors = len(freqAuthors)
-    print "the max num of coauthors is %d " % (maxCoauthors)
+    print ("the max num of coauthors is %d " % (maxCoauthors))
 
     
     with open('authors_index.txt','r') as authorsIndex:
@@ -130,7 +130,7 @@ if __name__ == "__main__":
             authorsDic[i] = name
             i = i+1
     
-    print "Writing result into result.txt... Wait..."
+    print ("Writing result into result.txt... Wait...")
 
     with open('result4.txt','w') as result2:
         with open('result3.txt','w') as result:
@@ -174,4 +174,4 @@ if __name__ == "__main__":
                 result2.write("%25s\t%25s\t%15s\t%10.0f\t%6.0f\t%6.0f\t%6.0f\t\%6.4f\t%6.4f\t%6.4f\t%6.4f\t%6.4f\n"\
                               %(A,B,C,SupAB_C,SupA,SupB,SupC,\
                                 ConA,ConB,ConC,MinCon,MaxCon))
-    print "Finished !"
+    print ("Finished !")
