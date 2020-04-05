@@ -1,6 +1,7 @@
 DBLP-Coauthor-Mining<br/>(从DBLP数据集中挖掘合作者)
 =============
-该项目来自https://github.com/findmyway/DBLP-Coauthor，主要改动为支持了Python3.
+该项目来自https://github.com/findmyway/DBLP-Coauthor
+，主要改动为支持了Python3.
 
 文件说明
 -------------
